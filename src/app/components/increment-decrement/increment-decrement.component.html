@@ -1,0 +1,14 @@
+<div class="input-group">
+    <span class="input-group-btn">
+        <button (click)="changeProgressValue(-10)" [class]="'btn btn-'+colorClass" type="button"><i class="fa fa-minus"></i></button>
+    </span>
+    <input
+        type="number"
+        class="form-control"
+        (keypress)="onChangeProgress($event)"
+        (keyup)="onChangeProgress($event)"
+        [(ngModel)]="progress">
+    <span class="input-group-btn">
+        <button (click)="changeProgressValue(10)"  [class]="'btn btn-'+colorClass" type="button"><i class="fa fa-plus"></i></button>
+    </span>
+</div>

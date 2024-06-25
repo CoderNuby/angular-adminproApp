@@ -7,4 +7,6 @@ import { Component } from '@angular/core';
 })
 export class ProgressComponent {
 
-}
+  progressOne: number = 50;
+  progressTwo: number = 30;
+}  
