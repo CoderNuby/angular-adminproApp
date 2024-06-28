@@ -10,9 +10,11 @@ export class SidebarService {
       title:  "Main",
       icon: "nav-small-cap",
       submenu: [
-        { title: "Dashboard", url: "/"},
+        { title: "Dashboard", url: "/pages/dashboard"},
         { title: "Progress", url: "/pages/progress"},
-        { title: "Graphs", url: "/pages/graphs"}
+        { title: "Graphs", url: "/pages/graphs"},
+        { title: "Promises", url: "/pages/promises"},
+        { title: "Rxjs", url: "/pages/rxjs"}
       ] 
     }
   ];

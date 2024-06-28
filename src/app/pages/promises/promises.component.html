@@ -1,0 +1,14 @@
+
+<h1>Intro to Promises - Get data from API</h1>
+
+<div class="row">
+    <div *ngFor="let user of users" class="col-4">
+        <div class="card" style="width: 100%;">
+            <img [src]="user.avatar" class="card-img-top">
+            <div class="card-body">
+              <h5 class="card-title">{{user.first_name + user.last_name}}</h5>
+              <p class="card-text">{{user.email}}</p>
+            </div>
+        </div>
+    </div>
+</div>
