@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SidebarService } from '../../services/sidebar.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-side-bar',
@@ -11,9 +12,14 @@ export class SideBarComponent {
   manuItems: Menu[] = []; 
 
   constructor(
-    private sidebarService: SidebarService
+    private sidebarService: SidebarService,
+    private authService: AuthService
   ){
     this.manuItems = sidebarService.menu;
+  }
+
+  logOut() {
+    this.authService.logOut();
   }
 }
 
