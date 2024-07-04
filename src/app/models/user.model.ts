@@ -1,3 +1,6 @@
+import { environment } from "../../environments/environment.development";
+
+const url = environment.apiUrl + "/images/users";
 
 export class UserModel {
     constructor(
@@ -10,6 +13,17 @@ export class UserModel {
         public _id?: string
     ) {
 
+    }
+
+    get imagePath() {
+        if(this.google) {
+            return this.image;
+        }
+        if(this.image) {
+            return `${url}/${this.image}`;
+        }else {
+            return `${url}/no-image`;
+        }
     }
 }
 

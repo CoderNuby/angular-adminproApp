@@ -8,6 +8,7 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { PromisesComponent } from './promises/promises.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { authGuard } from '../guards/auth.guard';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   { 
@@ -17,6 +18,7 @@ const routes: Routes = [
     children: [
       { path: '', component: DashboardComponent, data: { title: "Dashboard"}},
       { path: 'dashboard', component: DashboardComponent, data: { title: "Dashboard"}},
+      { path: 'profile', component: ProfileComponent, data: { title: "Profile"}},
       { path: 'progress', component: ProgressComponent, data: { title: "Progress"}},
       { path: 'graphs', component: GraphsComponent, data: { title: "Graphs"}},
       { path: 'account-settings', component: AccountSettingsComponent, data: { title: "Account Settings"}},

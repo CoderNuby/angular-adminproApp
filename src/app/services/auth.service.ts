@@ -5,6 +5,7 @@ import { LoginModel } from '../models/login.model';
 import { LoginResponse } from '../models/responses/loginResponse.model';
 import { Observable, catchError, map, of, tap } from 'rxjs';
 import { Router } from '@angular/router';
+import { UserModel } from '../models/user.model';
 
 declare const google: any;
 
@@ -15,10 +16,16 @@ export class AuthService {
 
   readonly url = `${environment.apiUrl}/auths`;
 
+  public user!: UserModel;
+
   constructor(
     private http: HttpClient,
     private router: Router
   ) { }
+
+  get token() {
+    return localStorage.getItem("token") || "";
+  }
 
   login(loginModel: LoginModel): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.url}/login`, loginModel)
@@ -40,21 +47,35 @@ export class AuthService {
   }
 
   validateToken() {
-    const token = localStorage.getItem("token") || "";
-    return this.http.get(`${this.url}/tokenValidate`, {
+    return this.http.get<LoginResponse>(`${this.url}/tokenValidate`, {
       headers: {
-        "x-token": token
+        "x-token": this.token
       }
     }).pipe(
-      map(res =>  true),
+      map(res =>  {
+        this.user = new UserModel(
+          res.user?.name || "",
+          res.user?.email || "",
+          "",
+          res.user?.image || "",
+          res.user?.google || false,
+          res.user?.role || "USER_ROLE",
+          res.user?._id || "",
+        );
+        return true;
+      }),
       catchError(err => of(false))
     );
   }
 
   logOut() {
     localStorage.removeItem("token");
-    google.accounts.id.revoke("L19330658@hermosillo.tecnm.mx", () => {
+    if(this.user.google) {
+      google.accounts.id.revoke(this.user.email, () => {
+        this.router.navigateByUrl("/login");
+      });
+    }else {
       this.router.navigateByUrl("/login");
-    });
+    }
   }
 }
