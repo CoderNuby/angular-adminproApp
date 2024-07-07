@@ -1,0 +1,70 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input #txtSearch (keyup)="searchUsers(txtSearch.value)" type="text" class="form-control" placeholder="Search users...">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="loading" class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="alert alert-info text-center">
+                    <h4 class="alert-heading">Loading</h4>
+                    <i class="fa fa-spin fa-refresh fa-2x"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="titles">
+                    <div>
+                        <h4 class="card-title">Users</h4>
+                        <h6 class="card-subtitle">All registered users</h6>
+                    </div>
+                    <h6><strong>Total Records ({{totalRecords}})</strong></h6>
+                </div>
+                <div class="table-responsive">
+                    <table *ngIf="!loading" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="width: 7rem;">Image</th>
+                                <th>Email</th>
+                                <th>Name</th>
+                                <th *ngIf="showAdminFields()" style="width: 7rem;">Role</th>
+                                <th style="width: 5rem;">Auth</th>
+                                <th *ngIf="showAdminFields()" style="width: 8rem;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let user of users">
+                                <td class="text-center"><img (dblclick)="changeImage(user)" style="cursor: pointer;" [src]="user.imagePath" class="imageW"></td>
+                                <td>{{user.email}}</td>
+                                <td>{{user.name}}</td>
+                                <td>{{user.role}}</td>
+                                <td >
+                                    <span *ngIf="user.google" class="label label-info">Google</span>
+                                    <span *ngIf="!user.google" class="label label-primary">Normal</span>
+                                </td>
+                                <td *ngIf="showAdminFields()" class="text-center actions-wrapper">
+                                    <button class="btn btn-success" (click)="changeRole(user)" style="cursor: pointer;" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-unlock"></i> </button>
+                                    <button class="btn btn-danger" (click)="deleteUser(user)" style="cursor: pointer;" data-toggle="tooltip" data-original-title="Delete"> <i class="fa fa-trash"></i> </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <app-paginator *ngIf="showPaginator" [totalRecords]="totalRecords" [recordsPerPage]="recordsPerPage" (sendPaginator)="changePage($event)"></app-paginator>
+            </div>
+        </div>
+    </div>
+</div>

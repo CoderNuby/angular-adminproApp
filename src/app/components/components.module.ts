@@ -4,13 +4,17 @@ import { IncrementDecrementComponent } from './increment-decrement/increment-dec
 import { FormsModule } from '@angular/forms';
 import { MultipleRadialBarComponent } from './multiple-radial-bar/multiple-radial-bar.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { PaginatorComponent } from './paginator/paginator.component';
+import { ModalImageComponent } from './modal-image/modal-image.component';
 
 
 
 @NgModule({
   declarations: [
     IncrementDecrementComponent,
-    MultipleRadialBarComponent
+    MultipleRadialBarComponent,
+    PaginatorComponent,
+    ModalImageComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +23,9 @@ import { NgApexchartsModule } from 'ng-apexcharts';
   ],
   exports: [
     IncrementDecrementComponent,
-    MultipleRadialBarComponent
+    MultipleRadialBarComponent,
+    PaginatorComponent,
+    ModalImageComponent
   ]
 })
 export class ComponentsModule { }

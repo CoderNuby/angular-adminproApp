@@ -9,6 +9,10 @@ import { PromisesComponent } from './promises/promises.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { authGuard } from '../guards/auth.guard';
 import { ProfileComponent } from './profile/profile.component';
+import { UsersComponent } from './maintenance/users/users.component';
+import { DoctorsComponent } from './maintenance/doctors/doctors.component';
+import { HospitalsComponent } from './maintenance/hospitals/hospitals.component';
+import { AdminsComponent } from './maintenance/users/admins/admins.component';
 
 const routes: Routes = [
   { 
@@ -24,6 +28,10 @@ const routes: Routes = [
       { path: 'account-settings', component: AccountSettingsComponent, data: { title: "Account Settings"}},
       { path: 'promises', component: PromisesComponent, data: { title: "Promises"}},
       { path: 'rxjs', component: RxjsComponent, data: { title: "Rxjs"}},
+      { path: 'users', component: UsersComponent, data: { title: "Users"}},
+      { path: 'doctors', component: DoctorsComponent, data: { title: "Doctors"}},
+      { path: 'hospitals', component: HospitalsComponent, data: { title: "Hospitals"}},
+      { path: 'admins', component: AdminsComponent, data: { title: "Admins"}},
     ]
   }
 ];

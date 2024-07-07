@@ -1,18 +1,17 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { UploadImageResponse } from '../models/responses/uploadImage.model';
+import { RootService } from './root.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UploadImageService {
+export class UploadImageService extends RootService {
 
   url: string = `${environment.apiUrl}/uploads`;
-  constructor() { }
-
-  get token() {
-    return localStorage.getItem("token") || "";
-  }
+  constructor() {
+    super();
+   }
 
   async uploadImage(collection: CollectionType, id: string, file: File) {
     const uploadUrl = `${this.url}/${collection}/${id}`;
@@ -22,9 +21,7 @@ export class UploadImageService {
       formData.append("image", file);
       const resp = await fetch(uploadUrl, {
         method: "POST",
-        headers: {
-          "x-token": this.token
-        },
+        headers: this.headers,
         body: formData
       });
 

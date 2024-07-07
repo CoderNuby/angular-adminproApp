@@ -10,18 +10,18 @@ import { UserModel } from '../../models/user.model';
 })
 export class SideBarComponent implements OnInit {
 
-  manuItems: Menu[] = [];
+  menuItems: Menu[] = [];
   user!: UserModel;
 
   constructor(
     private sidebarService: SidebarService,
     private authService: AuthService
   ){
-    this.manuItems = this.sidebarService.menu;
   }
-
+  
   ngOnInit(): void {
     this.user = this.authService.user;
+    this.menuItems = this.sidebarService.menu;
   }
 
   logOut() {

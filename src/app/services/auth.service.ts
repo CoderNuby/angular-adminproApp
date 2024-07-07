@@ -6,13 +6,14 @@ import { LoginResponse } from '../models/responses/loginResponse.model';
 import { Observable, catchError, map, of, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserModel } from '../models/user.model';
+import { RootService } from './root.service';
 
 declare const google: any;
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthService extends RootService {
 
   readonly url = `${environment.apiUrl}/auths`;
 
@@ -21,10 +22,8 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router
-  ) { }
-
-  get token() {
-    return localStorage.getItem("token") || "";
+  ) { 
+    super();
   }
 
   login(loginModel: LoginModel): Observable<LoginResponse> {
@@ -48,9 +47,7 @@ export class AuthService {
 
   validateToken() {
     return this.http.get<LoginResponse>(`${this.url}/tokenValidate`, {
-      headers: {
-        "x-token": this.token
-      }
+      headers: this.headers
     }).pipe(
       map(res =>  {
         this.user = new UserModel(
@@ -77,5 +74,6 @@ export class AuthService {
     }else {
       this.router.navigateByUrl("/login");
     }
+    this.user = new UserModel("", "");
   }
 }
