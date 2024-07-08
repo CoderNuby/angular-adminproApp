@@ -1,16 +1,14 @@
-import { HospitalModel } from "../hospital.model";
-import { UserModel } from "../user.model";
+import { MedicalDoctorModel } from "../medicalDoctor.model";
 
-export class SearchResponse<T> {
+export class MedicalDoctorsResponse {
     ok: boolean;
     message: string;
-    data: T[];
+    medicalDoctors?: MedicalDoctorModel[];
     totalRecords: number;
 
     constructor() {
         this.ok = false;
         this.message = "";
         this.totalRecords = 0;
-        this.data = [];
     }
 }

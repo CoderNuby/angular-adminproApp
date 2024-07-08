@@ -16,8 +16,7 @@ export class UserService extends RootService {
   readonly url = `${environment.apiUrl}/users`;
 
   constructor(
-    private http: HttpClient,
-    private authService: AuthService
+    private http: HttpClient
   ) {
     super();
    }

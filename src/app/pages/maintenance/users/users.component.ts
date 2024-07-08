@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user.service';
 import { UserModel } from '../../../models/user.model';
 import { AuthService } from '../../../services/auth.service';
 import { SearchService } from '../../../services/search.service';
 import Swal from 'sweetalert2';
 import { ModalImageService } from '../../../services/modal-image.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, OnDestroy {
 
   users: UserModel[] = [];
 
@@ -26,6 +27,8 @@ export class UsersComponent implements OnInit {
 
   currentUser!: UserModel;
 
+  imageSubscription!: Subscription;
+
   constructor(
     private userService: UserService,
     private searchService: SearchService,
@@ -37,7 +40,7 @@ export class UsersComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = this.authService.user;
     this.loadUsers(0);
-    this.modalImageService.imageChanged.subscribe(data => {
+    this.imageSubscription = this.modalImageService.imageChanged.subscribe(data => {
       this.users = this.users.map(user => {
         if(user._id === data.id) {
           user = new UserModel(
@@ -53,6 +56,10 @@ export class UsersComponent implements OnInit {
         return user;
       });
     });
+  }
+
+  ngOnDestroy(): void {
+    this.imageSubscription.unsubscribe();
   }
 
   changeImage(user: UserModel) {
