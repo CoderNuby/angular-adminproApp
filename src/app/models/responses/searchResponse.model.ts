@@ -1,5 +1,3 @@
-import { HospitalModel } from "../hospital.model";
-import { UserModel } from "../user.model";
 
 export class SearchResponse<T> {
     ok: boolean;

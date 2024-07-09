@@ -8,17 +8,17 @@ import { UserModel } from '../models/user.model';
 export class SidebarService {
 
   menu: Menu[] = [
-    // { 
-    //   title:  "Main",
-    //   icon: "mdi mdi-gauge",
-    //   submenu: [
-    //     { title: "Dashboard", url: "/pages/dashboard"},
-    //     { title: "Progress", url: "/pages/progress"},
-    //     { title: "Graphs", url: "/pages/graphs"},
-    //     { title: "Promises", url: "/pages/promises"},
-    //     { title: "Rxjs", url: "/pages/rxjs"}
-    //   ] 
-    // },
+    //{ 
+    //  title:  "Main",
+    //  icon: "mdi mdi-gauge",
+    //  submenu: [
+    //    { title: "Dashboard", url: "/pages/dashboard"},
+    //    { title: "Progress", url: "/pages/progress"},
+    //    { title: "Graphs", url: "/pages/graphs"},
+    //    { title: "Promises", url: "/pages/promises"},
+    //    { title: "Rxjs", url: "/pages/rxjs"}
+    //  ] 
+    //},
     { 
       title:  "Maintenance",
       icon: "mdi mdi-folder-lock-open",
