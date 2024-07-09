@@ -155,15 +155,9 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   async searchUsers(keyWord: string) {
     this.keyWord = keyWord;
-    if(!this.keyWord) {
-      this.showPaginator = false;
-      await this.loadUsers(0);
-      this.showPaginator = true;
-    }else{
-      this.showPaginator = false;
-      await this.loadUsers(0);
-      this.showPaginator = true;
-    }
+    this.showPaginator = false;
+    await this.loadUsers(0);
+    this.showPaginator = true;
   }
 
   changePage(page: number) {
@@ -176,7 +170,7 @@ export class UsersComponent implements OnInit, OnDestroy {
 
     if(!this.keyWord) {
       this.userService.getUser(this.currentPage, this.recordsPerPage).subscribe(res => {
-        this.users = res.users || [];
+        this.users = res.users!;
         this.totalRecords = res.totalRecords;
         this.loading = false;
       }, err => {

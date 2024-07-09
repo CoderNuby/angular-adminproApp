@@ -40,7 +40,7 @@ export class UserService extends RootService {
             user?.role,
             user?._id,
           );
-        })
+        });
 
         resp.users = users;
         return resp;

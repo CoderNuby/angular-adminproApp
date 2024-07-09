@@ -25,12 +25,15 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <div class="titles">
-                    <div>
+                <div class="row">
+                    <div class="col-8">
                         <h4 class="card-title">Hospitals</h4>
                         <h6 class="card-subtitle">All hospitals</h6>
                     </div>
-                    <h6><strong>Total Records ({{totalRecords}})</strong></h6>
+                    <div class="col">
+                        <button (click)="createHospital()" class="btn btn-success mb-3"><i class="fa fa-hospital-o"></i> Create Hospital</button>
+                        <h6><strong>Total Records ({{totalRecords}})</strong></h6>
+                    </div>
                 </div>
                 <div class="table-responsive">
                     <table *ngIf="!loading" class="table table-bordered">
@@ -44,8 +47,11 @@
                         <tbody>
                             <tr *ngFor="let hospital of hospitals">
                                 <td class="text-center"><img (dblclick)="changeImage(hospital)" style="cursor: pointer;" [src]="hospital.imagePath" class="imageW"></td>
-                                <td>{{hospital.name}}</td>
-                                <td *ngIf="showAdminFields()" class="text-center">
+                                <td>
+                                    <input [(ngModel)]="hospital.name" type="text" class="form-control" placeholder="Hospital Name">
+                                </td>
+                                <td *ngIf="showAdminFields()" class="text-center action-buttons">
+                                    <button class="btn btn-success" (click)="editHospital(hospital)" style="cursor: pointer;" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil"></i> </button>
                                     <button class="btn btn-danger" (click)="deleteHospital(hospital)" style="cursor: pointer;" data-toggle="tooltip" data-original-title="Delete"> <i class="fa fa-trash"></i> </button>
                                 </td>
                             </tr>

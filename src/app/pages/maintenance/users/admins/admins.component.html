@@ -16,12 +16,12 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <div class="titles">
-                    <div>
+                <div class="row">
+                    <div class="col-8">
                         <h4 class="card-title">Users</h4>
                         <h6 class="card-subtitle">All registered users</h6>
                     </div>
-                    <h6><strong>Total Records ({{totalRecords}})</strong></h6>
+                    <h6 class="col"><strong>Total Records ({{totalRecords}})</strong></h6>
                 </div>
                 <div class="table-responsive">
                     <table *ngIf="!loading" class="table table-bordered">

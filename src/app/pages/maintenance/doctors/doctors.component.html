@@ -25,12 +25,15 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <div class="titles">
-                    <div>
+                <div class="row">
+                    <div class="col-8">
                         <h4 class="card-title">Doctors</h4>
                         <h6 class="card-subtitle">All doctors</h6>
                     </div>
-                    <h6><strong>Total Records ({{totalRecords}})</strong></h6>
+                    <div class="col">
+                        <button (click)="createDoctor()" class="btn btn-success mb-3"><i class="fa fa-user-md"></i> Create Doctor</button>
+                        <h6><strong>Total Records ({{totalRecords}})</strong></h6>
+                    </div>
                 </div>
                 <div class="table-responsive">
                     <table *ngIf="!loading" class="table table-bordered">
@@ -45,7 +48,8 @@
                             <tr *ngFor="let doctor of doctors">
                                 <td class="text-center"><img (dblclick)="changeImage(doctor)" style="cursor: pointer;" [src]="doctor.imagePath" class="imageW"></td>
                                 <td>{{doctor.name}}</td>
-                                <td *ngIf="showAdminFields()" class="text-center">
+                                <td *ngIf="showAdminFields()" class="text-center action-buttons">
+                                    <button class="btn btn-success" (click)="editDoctor(doctor)" style="cursor: pointer;" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil"></i> </button>
                                     <button class="btn btn-danger" (click)="deleteDoctor(doctor)" style="cursor: pointer;" data-toggle="tooltip" data-original-title="Delete"> <i class="fa fa-trash"></i> </button>
                                 </td>
                             </tr>

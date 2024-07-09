@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { UserModel } from '../../../models/user.model';
 import { AuthService } from '../../../services/auth.service';
 import { HospitalModel } from '../../../models/hospital.model';
@@ -67,6 +67,89 @@ export class HospitalsComponent implements OnInit, OnDestroy {
     this.imageSubscription.unsubscribe();
   }
 
+  createHospital() {
+    Swal.fire({
+      title: "Hospital Name",
+      input: "text",
+      inputAttributes: {
+        autocapitalize: "off"
+      },
+      showCancelButton: true,
+      confirmButtonText: "Create Hospital",
+      showLoaderOnConfirm: true,
+      preConfirm: async (name) => {
+        try {
+          if (!name) {
+            return Swal.showValidationMessage("name is require");
+          }
+
+          return name;
+        } catch (error) {
+          Swal.showValidationMessage(`
+            Request failed: ${error}
+          `);
+        }
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.hospitalService.createHospital(result.value).subscribe(res => {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Hospital",
+            text: "Hospital created successful",
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }, err => {
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Create Hospital",
+            text: err.error.message,
+            showConfirmButton: false,
+            timer: 1500
+          });
+        });
+      }
+    });
+  }
+
+  editHospital(hospital: HospitalModel) {
+    Swal.fire({
+      title: "Warning",
+      text: "Are you sure you want to edit this hospital?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.hospitalService.updateHospital(hospital._id || "", hospital.name).subscribe(res => {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Hospital",
+            text: "Hospital updated successful",
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }, err => {
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Update Hospital",
+            text: err.error.message,
+            showConfirmButton: false,
+            timer: 1500
+          });
+        });
+      }
+    });
+  }
+
   changeImage(hospital: HospitalModel) {
     if(this.currentUser.role === "USER_ROLE") {
       return;
@@ -76,21 +159,14 @@ export class HospitalsComponent implements OnInit, OnDestroy {
 
   async searchHospitals(keyWord: string) {
     this.keyWord = keyWord;
-    if(!this.keyWord) {
-      this.showPaginator = false;
-      await this.loadHospitals(0);
-      this.showPaginator = true;
-    }else{
-      this.showPaginator = false;
-      await this.loadHospitals(0);
-      this.showPaginator = true;
-    }
+    this.showPaginator = false;
+    await this.loadHospitals(0);
+    this.showPaginator = true;
   }
 
   loadHospitals(page: number) {
     this.loading = true;
     this.currentPage = page;
-
     if(!this.keyWord) {
       this.hospitalService.getHospitals(this.currentPage, this.recordsPerPage).subscribe(res => {
         this.hospitals = res.hospitals || [];

@@ -8,6 +8,7 @@ import { SearchService } from '../../../services/search.service';
 import { ModalImageService } from '../../../services/modal-image.service';
 import { AuthService } from '../../../services/auth.service';
 import { HospitalModel } from '../../../models/hospital.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-doctors',
@@ -33,7 +34,8 @@ export class DoctorsComponent implements OnInit, OnDestroy {
     private medicalDoctorService: MedicalDoctorService,
     private searchService: SearchService,
     private modalImageService: ModalImageService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ){
 
   }
@@ -74,6 +76,14 @@ export class DoctorsComponent implements OnInit, OnDestroy {
     this.imageSubscription.unsubscribe();
   }
 
+  createDoctor() {
+    this.router.navigate(['/pages/doctor-maintenance'], { queryParams: { id: "new-doctor" } });
+  }
+
+  editDoctor(doctor: MedicalDoctorModel) {
+    this.router.navigate(['/pages/doctor-maintenance'], { queryParams: { id: doctor._id } });
+  }
+
   changeImage(doctor: MedicalDoctorModel) {
     if(this.currentUser.role === "USER_ROLE") {
       return;
@@ -83,15 +93,9 @@ export class DoctorsComponent implements OnInit, OnDestroy {
   
   async searchDoctors(keyWord: string) {
     this.keyWord = keyWord;
-    if(!this.keyWord) {
-      this.showPaginator = false;
-      await this.loadDoctors(0);
-      this.showPaginator = true;
-    }else{
-      this.showPaginator = false;
-      await this.loadDoctors(0);
-      this.showPaginator = true;
-    }
+    this.showPaginator = false;
+    await this.loadDoctors(0);
+    this.showPaginator = true;
   }
 
   loadDoctors(page: number) {

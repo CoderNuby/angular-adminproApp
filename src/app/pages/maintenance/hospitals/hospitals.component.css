@@ -3,7 +3,7 @@
     height: 6rem;
 }
 
-.titles {
+.action-buttons{
     display: flex;
     justify-content: space-between;
 }

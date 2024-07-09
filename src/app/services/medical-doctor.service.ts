@@ -8,6 +8,7 @@ import { MedicalDoctorModel } from '../models/medicalDoctor.model';
 import { UserModel } from '../models/user.model';
 import { HospitalModel } from '../models/hospital.model';
 import { MedicalDoctorResponse } from '../models/responses/medicalDoctorResponse.model';
+import { UpdateMedicalDoctorModel } from '../models/updateMedicalDoctor.model';
 
 @Injectable({
   providedIn: 'root'
@@ -58,6 +59,49 @@ export class MedicalDoctorService extends RootService{
         return resp;
       })
     );
+  }
+
+  getDoctor(id: string): Observable<MedicalDoctorResponse> {
+    return this.http.get<MedicalDoctorResponse>(`${this.url}/${id}`, {
+      headers: this.headers
+    }).pipe(
+      map(resp => {
+        resp.medicalDoctor = resp.medicalDoctor = new MedicalDoctorModel(
+            resp.medicalDoctor!.name,
+            resp.medicalDoctor?.image,
+            new UserModel(
+              resp.medicalDoctor?.user?.name || "",
+              resp.medicalDoctor?.user?.email || "",
+              "",
+              resp.medicalDoctor?.user?.image,
+              resp.medicalDoctor?.user?.google,
+              resp.medicalDoctor?.user?.role,
+              resp.medicalDoctor?.user?._id,
+            ),
+            new HospitalModel(
+              resp.medicalDoctor?.hospital?.name || "",
+              resp.medicalDoctor?.hospital?.image,
+              new UserModel("", ""),
+              resp.medicalDoctor?.hospital?._id
+            ),
+            resp.medicalDoctor?._id
+          );
+
+          return resp;
+      })
+    );
+  }
+
+  createDoctor(name: string, hospitalId: string) {
+    return this.http.post(this.url, {name, hospitalId},  {
+      headers: this.headers
+    });
+  }
+
+  updateDoctor(doctor: UpdateMedicalDoctorModel) {
+    return this.http.put(`${this.url}/${doctor._id}`, doctor,  {
+      headers: this.headers
+    });
   }
 
   deleteDoctor(id: string) {

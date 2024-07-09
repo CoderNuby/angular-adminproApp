@@ -1,0 +1,64 @@
+<div *ngIf="doctor" class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">{{this.title}}</h4>
+                <form
+                    (submit)="saveDoctor()"
+                    [formGroup]="doctorForm"
+                    class="form-horizontal p-t-20">
+                    <div class="form-group row">
+                        <label for="exampleInputuname3" class="col-sm-3 control-label">Doctor Name</label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ti-user"></i></div>
+                                <input
+                                    formControlName="name"
+                                    type="text"
+                                    class="form-control"
+                                    id="exampleInputuname3"
+                                    placeholder="Doctor Name">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="exampleInputEmail3" class="col-sm-3 control-label">Hospital</label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <select
+                                    formControlName="hospitalId"
+                                    class="form-control">
+                                    <option value="">Select Hospital</option>
+                                    <option *ngFor="let hospital of hospitals" [value]="hospital._id">{{hospital.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row m-b-0">
+                        <div class="offset-sm-3 col-sm-9">
+                            <button
+                                [disabled]="doctorForm.invalid"
+                                type="submit"
+                                class="btn btn-success waves-effect waves-light">
+                                <i class="fa fa-save"></i> Save
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Assigned hospital</h4>
+                <img [src]="hospitalSelected.imagePath" style="width: 15rem;">
+                <div class="card-body">
+                    <small class="text-muted">Name</small>
+                    <h6>{{hospitalSelected.name}}</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
